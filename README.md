@@ -28,6 +28,12 @@ JOIN
     antique_conditions ac ON a.condition_id = ac.id
 WHERE 
     a.status_id = (SELECT id FROM antique_status WHERE status_name = 'Available');
++---------------+-----------+---------+----------------+
+| piece_name    | category  | price   | condition_name |
++---------------+-----------+---------+----------------+
+| Antique Chair | Furniture | 1500.00 | Antique        |
+| Vintage Lamp  | Lighting  |  800.00 | Used           |
++---------------+-----------+---------+----------------+
 ```
 
 **2. Buscar antigüedades por categoría y rango de precio:**
@@ -40,6 +46,12 @@ FROM
 WHERE 
     category = 'Furniture' 
     AND price BETWEEN 500 AND 2000;
+
++---------------+-----------+---------+
+| name          | category  | price   |
++---------------+-----------+---------+
+| Antique Chair | Furniture | 1500.00 |
++---------------+-----------+---------+
 ```
 
 **3. Mostrar historial de ventas de un cliente específico:**
@@ -58,6 +70,14 @@ JOIN
     users u ON t.buyer_id = u.id
 WHERE 
     u.username = 'johndoe';
+
++---------------+---------------------+------------+---------+
+| piece_name    | transaction_date    | sale_price | buyer   |
++---------------+---------------------+------------+---------+
+| Antique Chair | 2024-08-15 00:00:00 |    1500.00 | johndoe |
+| Vintage Lamp  | 2024-09-01 00:00:00 |     800.00 | johndoe |
++---------------+---------------------+------------+---------+
+
 ```
 
 **4. Obtener el total de ventas realizadas en un periodo específico:**
@@ -69,6 +89,11 @@ FROM
     transactions
 WHERE 
     transaction_date BETWEEN '2024-08-01' AND '2024-08-31';
++-------------+
+| total_sales |
++-------------+
+|     1500.00 |
++-------------+
 ```
 
 **5. Encontrar los clientes más activos (con más compras realizadas):**
@@ -85,20 +110,14 @@ GROUP BY
     u.username
 ORDER BY 
     number_of_purchases DESC;
++----------+---------------------+
+| username | number_of_purchases |
++----------+---------------------+
+| johndoe  |                   2 |
++----------+---------------------+
+
 ```
 
-**6. Listar las antigüedades más populares por número de visitas o consultas:**
-
-Suponiendo que hay una columna `views` en `antiques`:
-
-```sql
-SELECT 
-    name, views
-FROM 
-    antiques
-ORDER BY 
-    views DESC;
-```
 
 **7. Listar las antigüedades vendidas en un rango de fechas específico:**
 
@@ -118,6 +137,13 @@ JOIN
     users u_buyer ON t.buyer_id = u_buyer.id
 WHERE 
     t.transaction_date BETWEEN '2024-08-01' AND '2024-08-31';
+
++---------------+---------------------+---------+---------+
+| piece_name    | transaction_date    | seller  | buyer   |
++---------------+---------------------+---------+---------+
+| Antique Chair | 2024-08-15 00:00:00 | janedoe | johndoe |
++---------------+---------------------+---------+---------+
+
 ```
 
 **8. Obtener un informe de inventario actual:**
@@ -134,6 +160,11 @@ WHERE
     i.status_id = (SELECT id FROM inventory_status WHERE status_name = 'In Stock')
 GROUP BY 
     a.category;
-```
++-----------+----------+
+| category  | quantity |
++-----------+----------+
+| Furniture |        1 |
+| Lighting  |        1 |
++-----------+----------+
 
-Estos comandos de inserción y consultas deben ayudarte a gestionar y analizar los datos de tu base de datos.
+```
