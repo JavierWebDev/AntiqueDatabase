@@ -2,10 +2,10 @@
 
 ## Diagrama Conceptual
 
-![](/JavierWebDev/AntiqueDatabase/img/antiques.png)
+![](/img/antiques.png)
 
 ---
 
 ## Diagrama DER
 
-![](/JavierWebDev/AntiqueDatabase/img/antique_market.png)
+![](/img/antique_market.png)
